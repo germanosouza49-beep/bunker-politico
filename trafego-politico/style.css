@@ -606,7 +606,12 @@ video {
 
 .bento-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: auto auto auto;
+  grid-template-areas:
+    "main  small1"
+    "main  small2"
+    "wide  wide";
   gap: 1.25rem;
 }
 
@@ -660,11 +665,18 @@ video {
 }
 
 .bento-card--main {
-  grid-column: span 2;
-  grid-row: span 2;
+  grid-area: main;
   border-left: 3px solid var(--accent);
   background: linear-gradient(135deg, rgba(123, 47, 242, 0.08) 0%, rgba(20, 20, 42, 0.6) 60%);
   padding: var(--space-xl);
+}
+
+.bento-card:nth-child(2) {
+  grid-area: small1;
+}
+
+.bento-card:nth-child(3) {
+  grid-area: small2;
 }
 
 .bento-card--main:hover {
@@ -672,7 +684,7 @@ video {
 }
 
 .bento-card--wide {
-  grid-column: span 3;
+  grid-area: wide;
 }
 
 .bento-card__number {
@@ -1335,16 +1347,11 @@ video {
   }
 
   .bento-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .bento-card--main {
-    grid-column: span 2;
-    grid-row: span 1;
-  }
-
-  .bento-card--wide {
-    grid-column: span 2;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "main   main"
+      "small1 small2"
+      "wide   wide";
   }
 
   .pricing-card--featured {
@@ -1388,12 +1395,11 @@ video {
 
   .bento-grid {
     grid-template-columns: 1fr;
-  }
-
-  .bento-card--main,
-  .bento-card--wide {
-    grid-column: span 1;
-    grid-row: span 1;
+    grid-template-areas:
+      "main"
+      "small1"
+      "small2"
+      "wide";
   }
 
   .bento-card--main {
