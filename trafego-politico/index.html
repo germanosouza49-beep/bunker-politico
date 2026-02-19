@@ -769,20 +769,22 @@
           .from(title, { y: 20, opacity: 0, duration: 0.4 }, '-=0.2')
           .from(text, { y: 15, opacity: 0, duration: 0.4 }, '-=0.2');
 
-        // Stacking: when NEXT card enters, THIS card shrinks + fades out completely
+        // Stacking: toggle-based (not scrub) to avoid conflict with entrance from()
+        // scrub captures opacity:0 as start value (set by entrance immediateRender), creating 0→0 tween
         if (i < stackedCards.length - 1) {
           var nextCard = stackedCards[i + 1];
-          gsap.to(inner, {
-            scale: 0.92,
-            opacity: 0,
-            y: -20,
-            scrollTrigger: {
+          (function(targetInner) {
+            ScrollTrigger.create({
               trigger: nextCard,
-              start: 'top bottom',
-              end: 'top 25%',
-              scrub: 0.5
-            }
-          });
+              start: 'top 70%',
+              onEnter: function() {
+                gsap.to(targetInner, { scale: 0.92, opacity: 0, y: -20, duration: 0.6, ease: 'power2.inOut', overwrite: 'auto' });
+              },
+              onLeaveBack: function() {
+                gsap.to(targetInner, { scale: 1, opacity: 1, y: 0, duration: 0.6, ease: 'power2.out', overwrite: 'auto' });
+              }
+            });
+          })(inner);
         }
 
         // Progress dots
