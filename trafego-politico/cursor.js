@@ -1,35 +1,38 @@
 /**
  * Custom Cursor — dot + ring with GSAP
+ * Centering e posicionamento 100% via GSAP (sem CSS transform)
  * Desativado em touch devices
  */
 
 (function () {
-  // Desativar em touch devices
   if (window.matchMedia('(hover: none)').matches) return;
   if (typeof gsap === 'undefined') return;
 
   // Criar elementos
-  const dot = document.createElement('div');
+  var dot = document.createElement('div');
   dot.className = 'cursor-dot';
 
-  const ring = document.createElement('div');
+  var ring = document.createElement('div');
   ring.className = 'cursor-ring';
 
   document.body.appendChild(dot);
   document.body.appendChild(ring);
 
+  // Centering via GSAP (substitui CSS translate(-50%, -50%))
+  gsap.set(dot, { xPercent: -50, yPercent: -50 });
+  gsap.set(ring, { xPercent: -50, yPercent: -50 });
+
   // Seletores de elementos interativos
-  const linkSelector = 'a, button, [role="button"], input[type="submit"], .btn';
-  const cardSelector = '.card, [data-cursor="card"]';
+  var linkSelector = 'a, button, [role="button"], input[type="submit"], .btn';
+  var cardSelector = '.card, .problem-card, .bento-card, .pricing-card, .faq-item, [data-cursor="card"]';
 
-  // Mouse move — GSAP tracking com durations diferentes
-  let hasMoved = false;
+  var hasMoved = false;
 
-  document.addEventListener('mousemove', (e) => {
+  // Mouse move — GSAP tracking
+  document.addEventListener('mousemove', function (e) {
     if (!hasMoved) {
       hasMoved = true;
       document.documentElement.classList.add('cursor-active');
-      // Posicionar imediatamente na primeira vez
       gsap.set(dot, { x: e.clientX, y: e.clientY });
       gsap.set(ring, { x: e.clientX, y: e.clientY });
     }
@@ -51,34 +54,39 @@
     });
   });
 
-  // Hover effects via event delegation
-  document.addEventListener('mouseover', (e) => {
-    const link = e.target.closest(linkSelector);
-    const card = e.target.closest(cardSelector);
+  // Hover effects via event delegation (scale via GSAP)
+  document.addEventListener('mouseover', function (e) {
+    var link = e.target.closest(linkSelector);
+    var card = e.target.closest(cardSelector);
 
     if (card) {
       ring.classList.add('is-card');
       ring.classList.remove('is-link');
+      gsap.to(ring, { scale: 1.8, opacity: 0.6, duration: 0.3, overwrite: 'auto' });
     } else if (link) {
       ring.classList.add('is-link');
       ring.classList.remove('is-card');
+      gsap.to(ring, { scale: 1.5, opacity: 0.5, duration: 0.3, overwrite: 'auto' });
     }
   });
 
-  document.addEventListener('mouseout', (e) => {
-    const link = e.target.closest(linkSelector);
-    const card = e.target.closest(cardSelector);
+  document.addEventListener('mouseout', function (e) {
+    var link = e.target.closest(linkSelector);
+    var card = e.target.closest(cardSelector);
 
-    if (link) ring.classList.remove('is-link');
-    if (card) ring.classList.remove('is-card');
+    if (link || card) {
+      ring.classList.remove('is-link');
+      ring.classList.remove('is-card');
+      gsap.to(ring, { scale: 1, opacity: 1, duration: 0.3, overwrite: 'auto' });
+    }
   });
 
-  // Esconder cursor ao sair da janela
-  document.addEventListener('mouseleave', () => {
+  // Esconder ao sair da janela
+  document.addEventListener('mouseleave', function () {
     gsap.to([dot, ring], { opacity: 0, duration: 0.2 });
   });
 
-  document.addEventListener('mouseenter', () => {
+  document.addEventListener('mouseenter', function () {
     if (hasMoved) {
       gsap.to([dot, ring], { opacity: 1, duration: 0.2 });
     }

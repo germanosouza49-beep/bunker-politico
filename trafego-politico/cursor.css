@@ -12,7 +12,6 @@
   left: 0;
   pointer-events: none;
   z-index: 9999;
-  transform: translate(-50%, -50%);
   opacity: 0;
   transition: opacity 0.3s;
 }
@@ -27,7 +26,6 @@
   left: 0;
   pointer-events: none;
   z-index: 9998;
-  transform: translate(-50%, -50%);
   opacity: 0;
   transition: opacity 0.3s;
 }
@@ -44,15 +42,8 @@
   cursor: none !important;
 }
 
-/* Hover: links and CTAs */
-.cursor-active .cursor-ring.is-link {
-  transform: translate(-50%, -50%) scale(1.5);
-  opacity: 0.5;
-}
-
-/* Hover: cards */
-.cursor-active .cursor-ring.is-card {
-  transform: translate(-50%, -50%) scale(1.8);
+/* Hover: cards — blend mode only (scale handled by GSAP) */
+.cursor-ring.is-card {
   mix-blend-mode: difference;
 }
 
