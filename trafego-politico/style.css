@@ -618,6 +618,27 @@ video {
     border-color var(--transition-smooth);
 }
 
+/* Spotlight glow follows mouse */
+.bento-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    300px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(123, 47, 242, 0.12),
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.4s;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.bento-card:hover::before {
+  opacity: 1;
+}
+
 .bento-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 32px rgba(123, 47, 242, 0.12);

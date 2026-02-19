@@ -760,6 +760,15 @@
         if (bentoMain) bentoTl.from(bentoMain, { y: 60, opacity: 0, duration: 0.8, ease: 'power3.out' }, '-=0.2');
         if (bentoSmall.length) bentoTl.from(bentoSmall, { y: 40, opacity: 0, duration: 0.6, stagger: 0.12 }, '-=0.4');
         if (bentoWide) bentoTl.from(bentoWide, { y: 40, opacity: 0, duration: 0.6 }, '-=0.2');
+
+        /* Spotlight glow — mouse tracking */
+        gsap.utils.toArray('.bento-card').forEach(function(card) {
+          card.addEventListener('mousemove', function(e) {
+            var rect = card.getBoundingClientRect();
+            card.style.setProperty('--mouse-x', (e.clientX - rect.left) + 'px');
+            card.style.setProperty('--mouse-y', (e.clientY - rect.top) + 'px');
+          });
+        });
       }
 
       /* === PROBLEM CARDS — 3D TILT ON HOVER === */
