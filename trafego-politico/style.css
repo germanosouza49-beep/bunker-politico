@@ -324,29 +324,6 @@ video {
 }
 
 /* ============================================
-   HEADER
-   ============================================ */
-.header {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  padding-block: var(--space-md);
-  z-index: 10;
-}
-
-.header__inner {
-  display: flex;
-  justify-content: center;
-}
-
-.header__logo {
-  height: 48px;
-  width: auto;
-  object-fit: contain;
-}
-
-/* ============================================
    HERO — Empilhado Centralizado
    Arquetipo: Hero Dominante (centralizado)
    Constraints: Headline >150px, Dark Mode
@@ -395,43 +372,14 @@ video {
   max-width: 860px;
 }
 
-.hero__badge {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-xs);
-  background: var(--accent-glow);
-  border: 1px solid rgba(123, 47, 242, 0.25);
-  border-radius: 100px;
-  padding: 0.4rem 1rem;
-  font-size: var(--fs-micro);
-  font-weight: 600;
-  color: var(--accent);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  width: fit-content;
-}
-
-.hero__badge::before {
-  content: '';
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--accent);
-  animation: pulse-dot 2s ease-in-out infinite;
-}
-
-@keyframes pulse-dot {
-
-  0%,
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  50% {
-    opacity: 0.5;
-    transform: scale(1.4);
-  }
+.hero__logo {
+  height: 38px;
+  /* Reduz tamanho */
+  width: auto;
+  object-fit: contain;
+  margin-bottom: var(--space-xs);
+  /* Distancia do título */
+  opacity: 0.9;
 }
 
 .hero__headline {
