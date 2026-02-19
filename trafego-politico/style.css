@@ -147,107 +147,6 @@ body::after {
   z-index: 1;
 }
 
-/* Camada 2 — Glow base styles / Aurora Global */
-.aurora-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 120vh;
-  /* Cobrir topo e hero */
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 0;
-  /* Abaixo do noise e de todo o conteudo */
-}
-
-/* Base style for aurora blobs */
-.aurora-blob {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(90px);
-  /* Desktop Blur */
-  opacity: 0.85;
-  /* Muito mais intenso */
-  mix-blend-mode: color-dodge;
-  /* Blend mais vivo e luminoso */
-  will-change: transform;
-}
-
-/* Posições relativas e cores */
-/* Top-left roxo claro */
-.aurora-blob--1 {
-  width: 70vw;
-  height: 70vw;
-  top: -30vh;
-  left: -15vw;
-  background: radial-gradient(circle, rgba(155, 95, 246, 0.8) 0%, transparent 65%);
-  animation: floatAurora 12s ease-in-out infinite alternate;
-}
-
-/* Center-right rosa/avermelhado luminoso */
-.aurora-blob--2 {
-  width: 50vw;
-  height: 50vw;
-  top: 5vh;
-  right: -15vw;
-  background: radial-gradient(circle, rgba(239, 68, 68, 0.6) 0%, transparent 65%);
-  animation: floatAurora 18s ease-in-out infinite alternate-reverse;
-}
-
-/* Bottom center azul neon (profundidade) */
-.aurora-blob--3 {
-  width: 80vw;
-  height: 60vw;
-  bottom: -15vh;
-  left: 10vw;
-  background: radial-gradient(circle, rgba(41, 11, 179, 0.7) 0%, transparent 65%);
-  animation: floatAurora 25s ease-in-out infinite alternate;
-}
-
-@keyframes floatAurora {
-  0% {
-    transform: translate(0, 0) scale(1);
-  }
-
-  50% {
-    transform: translate(3vw, 5vh) scale(1.1);
-  }
-
-  100% {
-    transform: translate(-3vw, -2vh) scale(0.9);
-  }
-}
-
-/* Mobile Optimizations - Reduzir Blur e Opacidade para salvar bateria e FPS */
-@media (max-width: 768px) {
-  .aurora-container {
-    height: 100vh;
-    /* Limita ao viewport inteiro no mobile */
-  }
-
-  .aurora-blob {
-    filter: blur(60px);
-    opacity: 0.65;
-    /* Melhorar no mobile tbm */
-  }
-
-  .aurora-blob--1 {
-    width: 120vw;
-    height: 120vw;
-  }
-
-  .aurora-blob--2 {
-    width: 100vw;
-    height: 100vw;
-  }
-
-  .aurora-blob--3 {
-    width: 150vw;
-    height: 150vw;
-  }
-}
-
 .section-glow {
   position: absolute;
   border-radius: 50%;
@@ -375,13 +274,14 @@ video {
 }
 
 .hero__logo {
-  height: 38px;
-  /* Reduz tamanho */
+  height: auto;
+  max-height: 80px;
   width: auto;
+  max-width: 250px;
+  /* Tamanho consideralvel sem ficar gigantesco lateral */
   object-fit: contain;
   margin-bottom: var(--space-xs);
-  /* Distancia do título */
-  opacity: 0.9;
+  opacity: 0.95;
 }
 
 .hero__headline {

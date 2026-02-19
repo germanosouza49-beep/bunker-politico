@@ -27,15 +27,6 @@
   <div class="scroll-progress" aria-hidden="true"></div>
 
   <!-- ============================================
-       AURORA BACKGROUND
-       ============================================ -->
-  <div class="aurora-container" aria-hidden="true">
-    <div class="aurora-blob aurora-blob--1" data-speed="0.4"></div>
-    <div class="aurora-blob aurora-blob--2" data-speed="1.5"></div>
-    <div class="aurora-blob aurora-blob--3" data-speed="0.6"></div>
-  </div>
-
-  <!-- ============================================
        HERO — Empilhado Centralizado
        ============================================ -->
   <section class="hero" id="hero">
@@ -43,8 +34,8 @@
 
       <!-- Content (acima) -->
       <div class="hero__content">
-        <img src="/.netlify/images?url=/images/logo%20bunker%20sem%20fundo%20branco.png&w=150&q=80"
-          alt="Logo Bunker Político" class="hero__logo" loading="eager" width="100" height="auto">
+        <img src="/.netlify/images?url=/images/logo%20bunker%20sem%20fundo%20branco.png&w=400&q=80"
+          alt="Logo Bunker Político" class="hero__logo" loading="eager" width="220" height="auto">
 
         <h1 class="hero__headline">
           Seu adversário já investe em tráfego pago. <em>E você?</em>
@@ -717,7 +708,7 @@
         headline.innerHTML = text.replace(/(\S+)/g, '<span class="word">$1</span>');
 
         var words = headline.querySelectorAll('.word');
-        var badge = document.querySelector('.hero__badge');
+        var badge = document.querySelector('.hero__logo'); /* Alterado do .hero__badge antigo para animar a logo */
         var sub = document.querySelector('.hero__sub');
 
         var tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
@@ -739,7 +730,7 @@
       // Hero parallax on content
       gsap.utils.toArray('[data-speed]').forEach(function (el) {
         var speed = parseFloat(el.dataset.speed) || 1;
-        var distance = (1 - speed) * 700;
+        var distance = (1 - speed) * 300;
         gsap.to(el, {
           y: distance, ease: 'none',
           scrollTrigger: {
