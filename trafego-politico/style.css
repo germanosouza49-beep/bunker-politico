@@ -22,11 +22,11 @@
 
 :root {
   /* Colors — BNKR Identity */
-  --bg-primary: #0c0c14;
-  --bg-secondary: #12121e;
-  --bg-tertiary: #1a1a2e;
-  --bg-card: #14142a;
-  --bg-card-hover: #1e1e38;
+  --bg-primary: transparent;
+  --bg-secondary: rgba(18, 18, 30, 0.15);
+  --bg-tertiary: rgba(26, 26, 46, 0.25);
+  --bg-card: rgba(20, 20, 42, 0.45);
+  --bg-card-hover: rgba(30, 30, 56, 0.65);
 
   --text-primary: #f5f5f7;
   --text-secondary: #a0a0b0;
@@ -1293,24 +1293,7 @@ video {
 
 .section--cta {
   position: relative;
-  overflow: hidden;
-  background: linear-gradient(-45deg, #0c0c14, #12121e, #14102a, #0c0c14);
-  background-size: 400% 400%;
-  animation: gradientShift 15s ease infinite;
-}
-
-@keyframes gradientShift {
-  0% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-
-  100% {
-    background-position: 0% 50%;
-  }
+  background: transparent;
 }
 
 .section--cta .btn--primary {
