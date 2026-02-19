@@ -112,8 +112,84 @@ body {
   font-size: var(--fs-body);
   line-height: var(--lh-body);
   color: var(--text-primary);
-  background-color: var(--bg-primary);
+  background: linear-gradient(-45deg, #0c0c14, #0e0e1a, #10101f, #0c0c14);
+  background-size: 400% 400%;
+  animation: bgBreath 20s ease infinite;
   overflow-x: hidden;
+}
+
+@keyframes bgBreath {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Camada 1 — SVG Noise Texture (global) */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeBlend mode='screen'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  mix-blend-mode: soft-light;
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Camada 2 — Glow base styles */
+.section-glow {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(80px);
+  will-change: transform;
+}
+
+/* Z-index: content above glow + noise layers */
+.section > .container {
+  position: relative;
+  z-index: 2;
+}
+
+/* Glow: O Problema (section 3) — red, bottom-left */
+.section-glow--problema {
+  width: 500px;
+  height: 500px;
+  bottom: -10%;
+  left: -10%;
+  background: radial-gradient(circle, rgba(239, 68, 68, 0.06) 0%, transparent 70%);
+}
+
+/* Glow: O Que Entregamos (section 4) — purple, top-center */
+.section-glow--entregamos {
+  width: 600px;
+  height: 600px;
+  top: -15%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: radial-gradient(circle, rgba(123, 47, 242, 0.08) 0%, transparent 70%);
+}
+
+/* Glow: Investimento (section 6) — purple, center-right */
+.section-glow--investimento {
+  width: 650px;
+  height: 650px;
+  top: 50%;
+  right: -10%;
+  transform: translateY(-50%);
+  background: radial-gradient(circle, rgba(123, 47, 242, 0.10) 0%, transparent 70%);
+}
+
+/* Glow: CTA Final (section 9) — purple, center */
+.section-glow--cta {
+  width: 700px;
+  height: 700px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(123, 47, 242, 0.10) 0%, transparent 70%);
 }
 
 a {
@@ -153,15 +229,7 @@ video {
   padding-block: var(--space-lg) var(--space-md);
 }
 
-/* Ambient background grain */
-.hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 0;
-}
+/* Hero noise removed — global body::after provides noise layer */
 
 /* Subtle gradient glow top */
 .hero::after {
@@ -1276,29 +1344,7 @@ video {
   animation: ctaPulse 2.5s ease-in-out infinite;
 }
 
-.section--cta::before {
-  content: '';
-  position: absolute;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(123, 47, 242, 0.12) 0%, transparent 70%);
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 0;
-  animation: glow-pulse 3s ease-in-out infinite alternate;
-  pointer-events: none;
-}
-
-@keyframes glow-pulse {
-  0% {
-    opacity: 0.8;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
+/* CTA glow now handled by .section-glow--cta element */
 
 .cta-block {
   position: relative;
@@ -1434,6 +1480,12 @@ video {
     --space-3xl: 4rem;
     --space-2xl: 3rem;
   }
+
+  /* Reduce glow sizes on mobile */
+  .section-glow--problema { width: 350px; height: 350px; }
+  .section-glow--entregamos { width: 420px; height: 420px; }
+  .section-glow--investimento { width: 450px; height: 450px; }
+  .section-glow--cta { width: 490px; height: 490px; }
 
   .hero {
     min-height: auto;

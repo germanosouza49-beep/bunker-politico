@@ -132,6 +132,7 @@
        SEÇÃO: O PROBLEMA
        ============================================ -->
   <section class="section section--problem" id="problema">
+    <div class="section-glow section-glow--problema" aria-hidden="true"></div>
     <div class="container">
 
       <div class="section__header section__header--center">
@@ -213,6 +214,7 @@
        SEÇÃO 4: O QUE ENTREGAMOS — Bento Box
        ============================================ -->
   <section class="section" id="entregamos">
+    <div class="section-glow section-glow--entregamos" aria-hidden="true"></div>
     <div class="container">
 
       <div class="section__header section__header--center">
@@ -342,6 +344,7 @@
        SEÇÃO 6: INVESTIMENTO — Split Vertical
        ============================================ -->
   <section class="section" id="investimento">
+    <div class="section-glow section-glow--investimento" aria-hidden="true"></div>
     <div class="container">
 
       <div class="section__header section__header--center">
@@ -595,6 +598,7 @@
        SEÇÃO 9: CTA FINAL — Isolated Element
        ============================================ -->
   <section class="section section--alt section--cta" id="cta-final">
+    <div class="section-glow section-glow--cta" aria-hidden="true"></div>
     <div class="container">
 
       <div class="cta-block">
@@ -672,6 +676,22 @@
 
       if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
       gsap.registerPlugin(ScrollTrigger);
+
+      /* === GLOW PARALLAX (Camada 3) === */
+      gsap.matchMedia().add('(min-width: 769px)', function() {
+        gsap.utils.toArray('.section-glow').forEach(function(glow) {
+          gsap.to(glow, {
+            y: -80,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: glow.closest('section') || glow.parentElement,
+              start: 'top bottom',
+              end: 'bottom top',
+              scrub: 1
+            }
+          });
+        });
+      });
 
       /* === SCROLL PROGRESS BAR === */
       gsap.to('.scroll-progress', {

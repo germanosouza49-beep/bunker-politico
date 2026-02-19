@@ -1,45 +1,52 @@
 /* ==========================================
-   CUSTOM CURSOR
+   CUSTOM CURSOR v3
+   Independent RAF — not tied to GSAP ticker/Lenis
    ========================================== */
+
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  will-change: transform;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
 
 .cursor-dot {
   width: 8px;
   height: 8px;
-  background: var(--color-primary);
-  border-radius: 50%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  z-index: 9999;
-  opacity: 0;
+  background: #7B2FF2;
 }
 
 .cursor-ring {
   width: 40px;
   height: 40px;
-  border: 1.5px solid color-mix(in srgb, var(--color-primary) 60%, transparent);
-  border-radius: 50%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  z-index: 9998;
-  opacity: 0;
+  border: 1.5px solid rgba(123, 47, 242, 0.5);
+  z-index: 99998;
 }
 
-/* Hide native cursor when custom cursor is active */
-.cursor-active,
-.cursor-active * {
-  cursor: none !important;
-}
-
-/* Hover: cards — blend mode only (scale handled by GSAP) */
+/* Hover: cards — blend mode only (scale handled by JS) */
 .cursor-ring.is-card {
   mix-blend-mode: difference;
 }
 
-/* Hover: text inputs — restore native cursor */
+/* Hide native cursor EVERYWHERE */
+.cursor-active,
+.cursor-active *,
+.cursor-active a,
+.cursor-active button,
+.cursor-active input,
+.cursor-active textarea,
+.cursor-active select,
+.cursor-active [role="button"] {
+  cursor: none !important;
+}
+
+/* Restore native cursor on text inputs when focused */
 .cursor-active input:focus,
 .cursor-active textarea:focus,
 .cursor-active select:focus {
