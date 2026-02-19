@@ -11,6 +11,12 @@
 [images]
   remote_images = ["https://.*"]
 
+# Redirect raiz → trafego-politico
+[[redirects]]
+  from = "/"
+  to = "/trafego-politico/"
+  status = 302
+
 # Redirect www → apex
 [[redirects]]
   from = "https://www.example.com/*"
