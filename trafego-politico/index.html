@@ -709,6 +709,27 @@
         });
       }
 
+      /* === PROBLEM CARDS — SVG STROKE DRAW === */
+      var iconPaths = gsap.utils.toArray('.problem-card__icon path');
+      if (iconPaths.length) {
+        iconPaths.forEach(function(path) {
+          var length = path.getTotalLength();
+          gsap.set(path, { strokeDasharray: length, strokeDashoffset: length });
+        });
+
+        gsap.to(iconPaths, {
+          strokeDashoffset: 0,
+          duration: 1,
+          ease: 'power2.out',
+          stagger: 0.2,
+          scrollTrigger: {
+            trigger: '.problem-grid',
+            start: 'top 75%',
+            toggleActions: 'play none none none'
+          }
+        });
+      }
+
       /* === PROBLEM CARDS — 3D TILT ON HOVER === */
       if (!window.matchMedia('(hover: none)').matches) {
         problemCards.forEach(function(card) {
