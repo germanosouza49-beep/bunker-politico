@@ -1,0 +1,64 @@
+/* ==========================================
+   CUSTOM CURSOR
+   ========================================== */
+
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--color-primary);
+  border-radius: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.cursor-ring {
+  width: 40px;
+  height: 40px;
+  border: 1.5px solid color-mix(in srgb, var(--color-primary) 60%, transparent);
+  border-radius: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Cursor visible after first mouse move */
+.cursor-active .cursor-dot,
+.cursor-active .cursor-ring {
+  opacity: 1;
+}
+
+/* Hide native cursor when custom cursor is active */
+.cursor-active,
+.cursor-active * {
+  cursor: none !important;
+}
+
+/* Hover: links and CTAs */
+.cursor-active .cursor-ring.is-link {
+  transform: translate(-50%, -50%) scale(1.5);
+  opacity: 0.5;
+}
+
+/* Hover: cards */
+.cursor-active .cursor-ring.is-card {
+  transform: translate(-50%, -50%) scale(1.8);
+  mix-blend-mode: difference;
+}
+
+/* Hover: text inputs — restore native cursor */
+.cursor-active input:focus,
+.cursor-active textarea:focus,
+.cursor-active select:focus {
+  cursor: text !important;
+}

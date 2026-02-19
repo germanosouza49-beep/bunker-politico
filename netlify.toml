@@ -1,8 +1,8 @@
 [build]
-  publish = "."
+  publish = "trafego-politico"
 
 [dev]
-  publish = "."
+  publish = "trafego-politico"
   port = 8888
   framework = "#static"
   autoLaunch = false
@@ -10,12 +10,6 @@
 # CDN de imagens (aceita qualquer URL externa)
 [images]
   remote_images = ["https://.*"]
-
-# Redirect raiz → trafego-politico
-[[redirects]]
-  from = "/"
-  to = "/trafego-politico/"
-  status = 302
 
 # Redirect www → apex
 [[redirects]]
