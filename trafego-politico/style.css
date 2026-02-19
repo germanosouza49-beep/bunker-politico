@@ -619,10 +619,17 @@ video {
   border-radius: var(--radius-lg);
   padding: var(--space-lg);
   overflow: hidden;
+  isolation: isolate;
   transition:
     transform var(--transition-smooth),
     box-shadow var(--transition-smooth),
     border-color var(--transition-smooth);
+}
+
+/* Card content sits above ::before spotlight */
+.bento-card > * {
+  position: relative;
+  z-index: 2;
 }
 
 /* Spotlight glow follows mouse */
@@ -833,13 +840,11 @@ video {
   border-radius: var(--radius-lg);
   padding: 2.5rem;
   transition:
-    transform var(--transition-smooth),
     box-shadow var(--transition-smooth),
     border-color var(--transition-smooth);
 }
 
 .pricing-card:hover {
-  transform: translateY(-4px);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   border-color: rgba(255, 255, 255, 0.1);
 }
@@ -1335,6 +1340,7 @@ video {
 
   .bento-card--main {
     grid-column: span 2;
+    grid-row: span 1;
   }
 
   .bento-card--wide {

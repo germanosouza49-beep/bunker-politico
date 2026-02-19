@@ -886,16 +886,26 @@
         .from('.pricing__note', { y: 20, opacity: 0, duration: 0.5 }, '-=0.3')
         .from('.pricing__cta', { scale: 0.9, opacity: 0, duration: 0.5, ease: 'back.out(1.7)' }, '-=0.2');
 
-      /* === SEÇÃO 6: PRICING — HOVER SCALE (PERFORMANCE CARD) === */
+      /* === SEÇÃO 6: PRICING — HOVER (GSAP) === */
       if (!window.matchMedia('(hover: none)').matches) {
+        // Base card — lift on hover
+        var baseCard = document.querySelector('.pricing-card--base');
+        if (baseCard) {
+          var baseHover = gsap.to(baseCard, {
+            y: -4, duration: 0.4, ease: 'power2.out', paused: true
+          });
+          baseCard.addEventListener('mouseenter', function() { baseHover.play(); });
+          baseCard.addEventListener('mouseleave', function() { baseHover.reverse(); });
+        }
+        // Performance card — scale + glow
         var perfCard = document.querySelector('.pricing-card--featured');
         if (perfCard) {
-          var hoverIn = gsap.to(perfCard, {
+          var perfHover = gsap.to(perfCard, {
             scale: 1.06, boxShadow: '0 20px 60px rgba(123, 47, 242, 0.25)',
             duration: 0.4, ease: 'power2.out', paused: true
           });
-          perfCard.addEventListener('mouseenter', function() { hoverIn.play(); });
-          perfCard.addEventListener('mouseleave', function() { hoverIn.reverse(); });
+          perfCard.addEventListener('mouseenter', function() { perfHover.play(); });
+          perfCard.addEventListener('mouseleave', function() { perfHover.reverse(); });
         }
       }
 
