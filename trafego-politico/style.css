@@ -165,41 +165,43 @@ body::after {
 .aurora-blob {
   position: absolute;
   border-radius: 50%;
-  filter: blur(80px);
+  filter: blur(90px);
   /* Desktop Blur */
-  opacity: 0.6;
-  mix-blend-mode: screen;
+  opacity: 0.85;
+  /* Muito mais intenso */
+  mix-blend-mode: color-dodge;
+  /* Blend mais vivo e luminoso */
   will-change: transform;
 }
 
 /* Posições relativas e cores */
 /* Top-left roxo claro */
 .aurora-blob--1 {
-  width: 60vw;
-  height: 60vw;
-  top: -20vh;
-  left: -10vw;
-  background: radial-gradient(circle, var(--accent) 0%, transparent 60%);
-  animation: floatAurora 15s ease-in-out infinite alternate;
-}
-
-/* Center-right rosa/avermelhado e menor (contraste) */
-.aurora-blob--2 {
-  width: 40vw;
-  height: 40vw;
-  top: 10vh;
-  right: -10vw;
-  background: radial-gradient(circle, #cc2b5e 0%, transparent 60%);
-  animation: floatAurora 20s ease-in-out infinite alternate-reverse;
-}
-
-/* Bottom center azul dim (profundidade) */
-.aurora-blob--3 {
   width: 70vw;
+  height: 70vw;
+  top: -30vh;
+  left: -15vw;
+  background: radial-gradient(circle, rgba(155, 95, 246, 0.8) 0%, transparent 65%);
+  animation: floatAurora 12s ease-in-out infinite alternate;
+}
+
+/* Center-right rosa/avermelhado luminoso */
+.aurora-blob--2 {
+  width: 50vw;
   height: 50vw;
-  bottom: -20vh;
-  left: 15vw;
-  background: radial-gradient(circle, #290bb3 0%, transparent 60%);
+  top: 5vh;
+  right: -15vw;
+  background: radial-gradient(circle, rgba(239, 68, 68, 0.6) 0%, transparent 65%);
+  animation: floatAurora 18s ease-in-out infinite alternate-reverse;
+}
+
+/* Bottom center azul neon (profundidade) */
+.aurora-blob--3 {
+  width: 80vw;
+  height: 60vw;
+  bottom: -15vh;
+  left: 10vw;
+  background: radial-gradient(circle, rgba(41, 11, 179, 0.7) 0%, transparent 65%);
   animation: floatAurora 25s ease-in-out infinite alternate;
 }
 
@@ -225,9 +227,9 @@ body::after {
   }
 
   .aurora-blob {
-    filter: blur(50px);
-    opacity: 0.4;
-    /* Menos opaco pro mobile respirar */
+    filter: blur(60px);
+    opacity: 0.65;
+    /* Melhorar no mobile tbm */
   }
 
   .aurora-blob--1 {

@@ -30,9 +30,9 @@
        AURORA BACKGROUND
        ============================================ -->
   <div class="aurora-container" aria-hidden="true">
-    <div class="aurora-blob aurora-blob--1" data-speed="0.8"></div>
-    <div class="aurora-blob aurora-blob--2" data-speed="1.2"></div>
-    <div class="aurora-blob aurora-blob--3" data-speed="0.9"></div>
+    <div class="aurora-blob aurora-blob--1" data-speed="0.4"></div>
+    <div class="aurora-blob aurora-blob--2" data-speed="1.5"></div>
+    <div class="aurora-blob aurora-blob--3" data-speed="0.6"></div>
   </div>
 
   <!-- ============================================
@@ -739,7 +739,7 @@
       // Hero parallax on content
       gsap.utils.toArray('[data-speed]').forEach(function (el) {
         var speed = parseFloat(el.dataset.speed) || 1;
-        var distance = (1 - speed) * 300;
+        var distance = (1 - speed) * 700;
         gsap.to(el, {
           y: distance, ease: 'none',
           scrollTrigger: {
