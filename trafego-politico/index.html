@@ -120,7 +120,7 @@
       <div class="problem-grid">
 
         <!-- Card 1 -->
-        <div class="problem-card" data-aos="fade-up">
+        <div class="problem-card">
           <div class="problem-card__icon">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
               stroke="currentColor">
@@ -136,7 +136,7 @@
         </div>
 
         <!-- Card 2 -->
-        <div class="problem-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="problem-card">
           <div class="problem-card__icon">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
               stroke="currentColor">
@@ -152,7 +152,7 @@
         </div>
 
         <!-- Card 3 -->
-        <div class="problem-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="problem-card">
           <div class="problem-card__icon">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
               stroke="currentColor">
@@ -671,6 +671,20 @@
           }
         });
       });
+
+      /* === PROBLEM CARDS — STAGGER VERTICAL === */
+      var problemCards = gsap.utils.toArray('.problem-card');
+      if (problemCards.length) {
+        gsap.from(problemCards, {
+          y: 80, opacity: 0, duration: 0.8,
+          stagger: 0.15, ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.problem-grid',
+            start: 'top 75%',
+            toggleActions: 'play none none none'
+          }
+        });
+      }
 
       /* === SCROLL ANIMATIONS (data-aos migration) === */
       var aosOffset = 60;
