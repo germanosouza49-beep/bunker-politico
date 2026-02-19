@@ -62,6 +62,29 @@
             QUERO FALAR COM A EQUIPE
           </a>
           <span class="micro-copy">A partir de R$ 3.000/mês. Agende uma reunião sem compromisso.</span>
+
+          <!-- Countdown -->
+          <div class="countdown" id="countdown">
+            <p class="countdown__label">Faltam <strong id="countdown-days-text">--</strong> dias para as eleições</p>
+            <div class="countdown__grid">
+              <div class="countdown__block">
+                <span class="countdown__number" id="cd-days">--</span>
+                <span class="countdown__unit">Dias</span>
+              </div>
+              <div class="countdown__block">
+                <span class="countdown__number" id="cd-hours">--</span>
+                <span class="countdown__unit">Horas</span>
+              </div>
+              <div class="countdown__block">
+                <span class="countdown__number" id="cd-min">--</span>
+                <span class="countdown__unit">Min</span>
+              </div>
+              <div class="countdown__block">
+                <span class="countdown__number" id="cd-sec">--</span>
+                <span class="countdown__unit">Seg</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -686,6 +709,25 @@
         });
       }
 
+      /* === PROBLEM CARDS — 3D TILT ON HOVER === */
+      if (!window.matchMedia('(hover: none)').matches) {
+        problemCards.forEach(function(card) {
+          card.addEventListener('mousemove', function(e) {
+            var rect = card.getBoundingClientRect();
+            var x = (e.clientX - rect.left) / rect.width - 0.5;
+            var y = (e.clientY - rect.top) / rect.height - 0.5;
+            gsap.to(card, {
+              rotateY: x * 8, rotateX: -y * 8,
+              transformPerspective: 800,
+              duration: 0.4, ease: 'power2.out'
+            });
+          });
+          card.addEventListener('mouseleave', function() {
+            gsap.to(card, { rotateY: 0, rotateX: 0, duration: 0.6, ease: 'elastic.out(1, 0.5)' });
+          });
+        });
+      }
+
       /* === SCROLL ANIMATIONS (data-aos migration) === */
       var aosOffset = 60;
       document.querySelectorAll('[data-aos]').forEach(function(el) {
@@ -737,6 +779,49 @@
           var track = urgencyBar.querySelector('.urgency-bar__track');
           if (track) track.style.animationPlayState = 'running';
         });
+      }
+
+      /* === COUNTDOWN — 1º TURNO 04/10/2026 === */
+      var target = new Date('2026-10-04T08:00:00-03:00').getTime();
+      var cdDays = document.getElementById('cd-days');
+      var cdHours = document.getElementById('cd-hours');
+      var cdMin = document.getElementById('cd-min');
+      var cdSec = document.getElementById('cd-sec');
+      var cdDaysText = document.getElementById('countdown-days-text');
+
+      function updateCountdown() {
+        var now = Date.now();
+        var diff = target - now;
+        if (diff <= 0) { diff = 0; }
+
+        var days = Math.floor(diff / 86400000);
+        var hours = Math.floor((diff % 86400000) / 3600000);
+        var min = Math.floor((diff % 3600000) / 60000);
+        var sec = Math.floor((diff % 60000) / 1000);
+
+        var pad = function(n) { return n < 10 ? '0' + n : String(n); };
+
+        var newDays = pad(days);
+        var newHours = pad(hours);
+        var newMin = pad(min);
+        var newSec = pad(sec);
+
+        // Tick animation on change
+        if (cdSec && cdSec.textContent !== newSec) {
+          cdSec.classList.add('tick');
+          setTimeout(function() { cdSec.classList.remove('tick'); }, 300);
+        }
+
+        if (cdDays) cdDays.textContent = newDays;
+        if (cdHours) cdHours.textContent = newHours;
+        if (cdMin) cdMin.textContent = newMin;
+        if (cdSec) cdSec.textContent = newSec;
+        if (cdDaysText) cdDaysText.textContent = days;
+      }
+
+      if (cdDays) {
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
       }
 
       /* === FAQ ACCORDION === */
