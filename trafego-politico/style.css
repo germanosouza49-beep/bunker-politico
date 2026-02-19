@@ -731,6 +731,12 @@ video {
   gap: 2rem;
   align-items: start;
   position: relative;
+  filter: blur(2px) saturate(0.3);
+  transition: filter 0.8s ease;
+}
+
+.timeline-step.is-active {
+  filter: blur(0) saturate(1);
 }
 
 .timeline-step__circle {

@@ -800,6 +800,15 @@
         });
       });
 
+      /* === TIMELINE — BLUR + DESATURATION REVEAL === */
+      gsap.utils.toArray('.timeline-step').forEach(function(step) {
+        ScrollTrigger.create({
+          trigger: step,
+          start: 'top 70%',
+          onEnter: function() { step.classList.add('is-active'); }
+        });
+      });
+
       /* === TIMELINE — STEP NUMBER COUNTER === */
       gsap.utils.toArray('.timeline-step__number').forEach(function(el) {
         var target = parseInt(el.dataset.value);
