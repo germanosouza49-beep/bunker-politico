@@ -134,64 +134,77 @@
   <section class="section section--problem" id="problema">
     <div class="container">
 
-      <div class="section__header">
+      <div class="section__header section__header--center">
         <h2 class="section__title">
           O que acontece com quem ignora o <em>tráfego pago</em>
         </h2>
       </div>
 
-      <div class="problem-grid">
+    </div>
 
-        <!-- Card 1 -->
-        <div class="problem-card">
-          <div class="problem-card__icon">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
-              stroke="currentColor">
+    <!-- Stacked cards container (NO overflow hidden on ancestors) -->
+    <div class="stacked-cards">
+
+      <!-- Card 1 -->
+      <div class="stacked-card" style="z-index:1">
+        <div class="stacked-card__inner">
+          <span class="stacked-card__number">01</span>
+          <div class="stacked-card__icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 48 48" stroke-width="1.5"
+              stroke="currentColor" width="48" height="48">
               <path stroke-linecap="round" stroke-linejoin="round"
-                d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                d="M24 12v12h9m9 0a18 18 0 1 1-36 0 18 18 0 0 1 36 0Z" />
             </svg>
           </div>
-          <div class="problem-card__content">
-            <h3 class="problem-card__title">Começam tarde demais</h3>
-            <p class="problem-card__text">Só pensam em digital perto da eleição. Sem dados, sem base, sem tempo pra
-              otimizar. O custo dispara e o resultado não aparece.</p>
-          </div>
+          <h3 class="stacked-card__title">Começam tarde demais</h3>
+          <p class="stacked-card__text">Só pensam em digital perto da eleição. Sem dados, sem base, sem tempo pra
+            otimizar. O custo dispara e o resultado não aparece.</p>
         </div>
-
-        <!-- Card 2 -->
-        <div class="problem-card">
-          <div class="problem-card__icon">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
-              stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                d="M18.364 18.364A9 9 0 0 0 5.636 5.636m12.728 12.728A9 9 0 0 1 5.636 5.636m12.728 12.728L5.636 5.636" />
-            </svg>
-          </div>
-          <div class="problem-card__content">
-            <h3 class="problem-card__title">Contratam quem não entende de eleição</h3>
-            <p class="problem-card__text">Gestor de tráfego genérico que desconhece as regras do TSE e nem sabe que o
-              Google proibiu anúncios políticos no Brasil.</p>
-          </div>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="problem-card">
-          <div class="problem-card__icon">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
-              stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
-              <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-            </svg>
-          </div>
-          <div class="problem-card__content">
-            <h3 class="problem-card__title">Investem no escuro</h3>
-            <p class="problem-card__text">Dinheiro entrando sem relatório, sem direcionamento, sem saber que conteúdo
-              funciona. Zero visibilidade sobre os resultados.</p>
-          </div>
-        </div>
-
       </div>
+
+      <!-- Card 2 -->
+      <div class="stacked-card" style="z-index:2">
+        <div class="stacked-card__inner">
+          <span class="stacked-card__number">02</span>
+          <div class="stacked-card__icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 48 48" stroke-width="1.5"
+              stroke="currentColor" width="48" height="48">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M36.728 36.728A18 18 0 0 0 11.272 11.272m25.456 25.456A18 18 0 0 1 11.272 11.272m25.456 25.456L11.272 11.272" />
+            </svg>
+          </div>
+          <h3 class="stacked-card__title">Contratam quem não entende de eleição</h3>
+          <p class="stacked-card__text">Gestor de tráfego genérico que desconhece as regras do TSE e nem sabe que o
+            Google proibiu anúncios políticos no Brasil.</p>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="stacked-card" style="z-index:3">
+        <div class="stacked-card__inner">
+          <span class="stacked-card__number">03</span>
+          <div class="stacked-card__icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 48 48" stroke-width="1.5"
+              stroke="currentColor" width="48" height="48">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M4.072 24.644a2.024 2.024 0 0 1 0-1.278C7.846 15.02 14.72 9 24 9c9.276 0 16.146 6.014 19.926 14.356a2.024 2.024 0 0 1 0 1.278C40.146 32.98 33.28 39 24 39c-9.276 0-16.146-6.014-19.926-14.356Z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M30 24a6 6 0 1 1-12 0 6 6 0 0 1 12 0Z" />
+            </svg>
+          </div>
+          <h3 class="stacked-card__title">Investem no escuro</h3>
+          <p class="stacked-card__text">Dinheiro entrando sem relatório, sem direcionamento, sem saber que conteúdo
+            funciona. Zero visibilidade sobre os resultados.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Progress dots -->
+    <div class="stacked-dots" id="stacked-dots">
+      <span class="stacked-dots__dot" data-index="0"></span>
+      <span class="stacked-dots__dot" data-index="1"></span>
+      <span class="stacked-dots__dot" data-index="2"></span>
+    </div>
 
     </div>
   </section>
@@ -707,52 +720,86 @@
         });
       });
 
-      /* === PROBLEM SECTION — SUBTLE BG SHIFT === */
-      var problemSection = document.querySelector('.section--problem');
-      if (problemSection) {
-        gsap.to(problemSection, {
-          backgroundColor: '#0e0e1a',
-          scrollTrigger: {
-            trigger: problemSection,
-            start: 'top center',
-            end: 'bottom center',
-            scrub: true
-          }
-        });
-      }
+      /* === STACKED CARDS — SECTION 3 === */
+      var stackedCards = gsap.utils.toArray('.stacked-card');
+      var stackedDots = document.getElementById('stacked-dots');
+      var dots = stackedDots ? gsap.utils.toArray('.stacked-dots__dot') : [];
 
-      /* === PROBLEM CARDS — STAGGER VERTICAL === */
-      var problemCards = gsap.utils.toArray('.problem-card');
-      if (problemCards.length) {
-        gsap.from(problemCards, {
-          y: 80, opacity: 0, duration: 0.8,
-          stagger: 0.15, ease: 'power3.out',
+      // Section title entrance
+      gsap.from('#problema .section__header', {
+        y: 40, opacity: 0, duration: 0.8,
+        scrollTrigger: { trigger: '#problema', start: 'top 75%' }
+      });
+
+      // Per-card entrance timeline (plays once) + stacking scrub
+      stackedCards.forEach(function(card, i) {
+        var inner = card.querySelector('.stacked-card__inner');
+        var icon = card.querySelector('.stacked-card__icon');
+        var title = card.querySelector('.stacked-card__title');
+        var text = card.querySelector('.stacked-card__text');
+
+        // Entrance timeline (once)
+        var entranceTl = gsap.timeline({
           scrollTrigger: {
-            trigger: '.problem-grid',
-            start: 'top 75%',
+            trigger: card,
+            start: 'top 80%',
             toggleActions: 'play none none none'
           }
         });
-      }
+        entranceTl
+          .from(inner, { y: 60, opacity: 0, duration: 0.8, ease: 'power3.out' })
+          .from(icon, { scale: 0, duration: 0.4, ease: 'back.out(2)' }, '-=0.4')
+          .from(title, { y: 20, opacity: 0, duration: 0.4 }, '-=0.2')
+          .from(text, { y: 15, opacity: 0, duration: 0.4 }, '-=0.2');
 
-      /* === PROBLEM CARDS — SVG STROKE DRAW === */
-      var iconPaths = gsap.utils.toArray('.problem-card__icon path');
-      if (iconPaths.length) {
-        iconPaths.forEach(function(path) {
-          var length = path.getTotalLength();
-          gsap.set(path, { strokeDasharray: length, strokeDashoffset: length });
-        });
+        // Stacking: when NEXT card enters, THIS card shrinks/darkens
+        if (i < stackedCards.length - 1) {
+          var nextCard = stackedCards[i + 1];
+          gsap.to(inner, {
+            scale: 1 - 0.04 * (stackedCards.length - 1 - i),
+            opacity: 1 - 0.2 * (stackedCards.length - 1 - i),
+            y: -12 * (stackedCards.length - 1 - i),
+            scrollTrigger: {
+              trigger: nextCard,
+              start: 'top bottom',
+              end: 'top 20%',
+              scrub: 0.5
+            }
+          });
+        }
 
-        gsap.to(iconPaths, {
-          strokeDashoffset: 0,
-          duration: 1,
-          ease: 'power2.out',
-          stagger: 0.2,
-          scrollTrigger: {
-            trigger: '.problem-grid',
-            start: 'top 75%',
-            toggleActions: 'play none none none'
-          }
+        // Progress dots
+        if (dots.length) {
+          ScrollTrigger.create({
+            trigger: card,
+            start: 'top 50%',
+            end: 'bottom 50%',
+            onEnter: function() {
+              dots.forEach(function(dot, di) {
+                dot.classList.toggle('is-active', di === i);
+                dot.classList.toggle('is-past', di < i);
+              });
+            },
+            onEnterBack: function() {
+              dots.forEach(function(dot, di) {
+                dot.classList.toggle('is-active', di === i);
+                dot.classList.toggle('is-past', di < i);
+              });
+            }
+          });
+        }
+      });
+
+      // Show/hide dots based on section visibility
+      if (stackedDots) {
+        ScrollTrigger.create({
+          trigger: '#problema',
+          start: 'top 80%',
+          end: 'bottom 20%',
+          onEnter: function() { stackedDots.classList.add('is-visible'); },
+          onLeave: function() { stackedDots.classList.remove('is-visible'); },
+          onEnterBack: function() { stackedDots.classList.add('is-visible'); },
+          onLeaveBack: function() { stackedDots.classList.remove('is-visible'); }
         });
       }
 
@@ -831,25 +878,6 @@
           onUpdate: function() { el.textContent = String(Math.round(obj.val)).padStart(2, '0'); }
         });
       });
-
-      /* === PROBLEM CARDS — 3D TILT ON HOVER === */
-      if (!window.matchMedia('(hover: none)').matches) {
-        problemCards.forEach(function(card) {
-          card.addEventListener('mousemove', function(e) {
-            var rect = card.getBoundingClientRect();
-            var x = (e.clientX - rect.left) / rect.width - 0.5;
-            var y = (e.clientY - rect.top) / rect.height - 0.5;
-            gsap.to(card, {
-              rotateY: x * 8, rotateX: -y * 8,
-              transformPerspective: 800,
-              duration: 0.4, ease: 'power2.out'
-            });
-          });
-          card.addEventListener('mouseleave', function() {
-            gsap.to(card, { rotateY: 0, rotateX: 0, duration: 0.6, ease: 'elastic.out(1, 0.5)' });
-          });
-        });
-      }
 
       /* === SCROLL ANIMATIONS (data-aos migration) === */
       var aosOffset = 60;

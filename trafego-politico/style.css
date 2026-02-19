@@ -526,68 +526,123 @@ video {
 }
 
 /* Problem Cards -- stagger vertical */
-.problem-grid {
-  display: grid;
-  gap: var(--space-md);
+/* --- Stacked Cards --- */
+.stacked-cards {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 var(--space-md);
 }
 
-.problem-card {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: var(--space-md);
-  align-items: start;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: var(--space-lg);
-  transform-style: preserve-3d;
+.stacked-card {
+  position: sticky;
+  top: 15vh;
+  margin-bottom: 40vh;
+}
+
+.stacked-card:last-child {
+  margin-bottom: 0;
+}
+
+.stacked-card__inner {
+  position: relative;
+  border-radius: 20px;
+  padding: 3rem;
   will-change: transform;
-  transition:
-    box-shadow var(--transition-smooth),
-    border-color var(--transition-smooth);
 }
 
-.problem-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lift);
-  border-color: var(--border-hover);
+/* Progressive red intensity per card */
+.stacked-card:nth-child(1) .stacked-card__inner {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.03), var(--bg-card) 60%);
+  border: 1px solid rgba(239, 68, 68, 0.06);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
 }
 
-.problem-card__icon {
+.stacked-card:nth-child(2) .stacked-card__inner {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.05), var(--bg-card) 60%);
+  border: 1px solid rgba(239, 68, 68, 0.10);
+  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.35);
+}
+
+.stacked-card:nth-child(3) .stacked-card__inner {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.07), var(--bg-card) 60%);
+  border: 1px solid rgba(239, 68, 68, 0.16);
+  box-shadow: 0 12px 60px rgba(0, 0, 0, 0.4);
+}
+
+.stacked-card__number {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 4rem;
+  color: rgba(239, 68, 68, 0.06);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.stacked-card__icon {
+  margin-bottom: 1.25rem;
+}
+
+.stacked-card__icon svg {
   width: 48px;
   height: 48px;
-  border-radius: var(--radius-sm);
-  background: var(--danger-dim);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
+  color: #ef4444;
+  stroke-width: 1.5;
 }
 
-.problem-card__icon svg {
-  width: 22px;
-  height: 22px;
-  color: var(--danger);
-}
-
-.problem-card__content {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.problem-card__title {
+.stacked-card__title {
   font-family: var(--font-heading);
-  font-size: var(--fs-h3);
   font-weight: 600;
+  font-size: clamp(1.3rem, 2vw, 1.75rem);
   color: var(--text-primary);
   letter-spacing: -0.01em;
+  margin-bottom: 0.75rem;
 }
 
-.problem-card__text {
-  font-size: var(--fs-body);
+.stacked-card__text {
+  font-size: clamp(0.95rem, 1.2vw, 1.1rem);
   color: var(--text-secondary);
-  line-height: var(--lh-body);
+  line-height: 1.7;
+  max-width: 560px;
+}
+
+/* Progress dots */
+.stacked-dots {
+  position: fixed;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.stacked-dots.is-visible {
+  opacity: 1;
+}
+
+.stacked-dots__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  transition: transform 0.3s, background 0.3s;
+}
+
+.stacked-dots__dot.is-active {
+  background: #ef4444;
+  transform: scale(1.5);
+}
+
+.stacked-dots__dot.is-past {
+  background: #ef4444;
 }
 
 /* ============================================
@@ -1344,6 +1399,15 @@ video {
     max-width: 100%;
   }
 
+  .stacked-card {
+    top: 12vh;
+    margin-bottom: 35vh;
+  }
+
+  .stacked-card__inner {
+    padding: 2.5rem;
+  }
+
   .bento-grid {
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
@@ -1380,10 +1444,17 @@ video {
     font-size: 0.65rem;
   }
 
-  .problem-card {
-    grid-template-columns: 1fr;
-    gap: var(--space-sm);
-    padding: var(--space-md);
+  .stacked-card {
+    top: 10vh;
+    margin-bottom: 30vh;
+  }
+
+  .stacked-card__inner {
+    padding: 2rem;
+  }
+
+  .stacked-dots {
+    display: none;
   }
 
   .btn {
@@ -1460,6 +1531,21 @@ video {
 @media (max-width: 480px) {
   .hero__headline {
     font-size: clamp(2rem, 11vw, 3rem);
+  }
+
+  .stacked-card {
+    top: 8vh;
+    margin-bottom: 25vh;
+  }
+
+  .stacked-card__inner {
+    padding: 1.5rem;
+  }
+
+  .stacked-card__number {
+    font-size: 3rem;
+    top: 1rem;
+    right: 1rem;
   }
 
   .bento-card {
