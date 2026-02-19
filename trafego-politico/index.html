@@ -16,8 +16,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@600;700&display=swap"
     rel="stylesheet">
 
-  <!-- AOS CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
+  <!-- Splitting.js CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/splitting/dist/splitting.css" />
+  <link rel="stylesheet" href="https://unpkg.com/splitting/dist/splitting-cells.css" />
+
+
 
   <!-- CSS -->
   <link rel="stylesheet" href="/trafego-politico/style.css">
@@ -579,31 +582,92 @@
     </div>
   </footer>
 
-  <!-- AOS JS -->
-  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Lenis (Smooth Scroll) -->
+  <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js"></script>
+
+  <!-- Splitting.js -->
+  <script src="https://unpkg.com/splitting/dist/splitting.min.js"></script>
+
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      AOS.init({
-        duration: 700,
-        easing: 'ease-out-cubic',
-        once: true,
-        offset: 60,
-        disableMutationObserver: true
-      });
+    // Initialize Lenis (Smooth Scroll)
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      direction: 'vertical',
+      gestureDirection: 'vertical',
+      smooth: true,
+      mouseMultiplier: 1,
+      smoothTouch: false,
+      touchMultiplier: 2,
     });
 
-    // CTA reveal timer (simulates VSL timer ~2:30)
-    // In production, tie this to the actual player API
-    setTimeout(function () {
-      var cta = document.getElementById('hero-cta');
-      if (cta) {
-        cta.style.opacity = '1';
-        cta.style.pointerEvents = 'auto';
-      }
-    }, 3000); // 3s for demo, use 150000 (2:30) in production
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
 
-    // FAQ Accordion
+    // GSAP + ScrollTrigger Init
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Splitting.js Init
+    Splitting();
+
+    // DOM Ready
     document.addEventListener('DOMContentLoaded', function () {
+
+      // 1. AOS Migration to GSAP
+      const aosElements = document.querySelectorAll('[data-aos]');
+      const aosOffset = 50;
+
+      aosElements.forEach(el => {
+        const type = el.dataset.aos;
+        const delayMs = parseInt(el.dataset.aosDelay) || 0;
+        const durationMs = parseInt(el.dataset.aosDuration) || 800;
+
+        let initialVars = { autoAlpha: 0 };
+
+        if (type && type.includes('up')) initialVars.y = aosOffset;
+        else if (type && type.includes('down')) initialVars.y = -aosOffset;
+        else if (type && type.includes('right')) initialVars.x = -aosOffset;
+        else if (type && type.includes('left')) initialVars.x = aosOffset;
+
+        // Set initial state
+        gsap.set(el, initialVars);
+
+        // Animate
+        gsap.to(el, {
+          autoAlpha: 1,
+          x: 0,
+          y: 0,
+          duration: durationMs / 1000,
+          delay: delayMs / 1000,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: el,
+            start: "top 85%",
+            toggleActions: "play none none none"
+          }
+        });
+      });
+
+      // Refresh ScrollTrigger positions
+      ScrollTrigger.refresh();
+
+      // 2. CTA reveal timer (simulates VSL timer ~2:30)
+      setTimeout(function () {
+        var cta = document.getElementById('hero-cta');
+        if (cta) {
+          cta.style.opacity = '1';
+          cta.style.pointerEvents = 'auto';
+        }
+      }, 3000); // 3s for demo
+
+      // 3. FAQ Accordion
       var items = document.querySelectorAll('.faq-item');
       items.forEach(function (item) {
         var btn = item.querySelector('.faq-item__question');
@@ -621,6 +685,7 @@
           }
         });
       });
+
     });
   </script>
 

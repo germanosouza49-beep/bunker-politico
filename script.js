@@ -3,26 +3,288 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  initAOS();
+  initLenis();
+  initScrollProgress();
+  initParallax();
+  initHeroEntrance();
+  initVslCta();
+  initMarquee();
+  initScrollAnimations();
   initForms();
   initPhoneInput();
   initYear();
 });
 
 /* ==========================================
-   AOS
+   LENIS SMOOTH SCROLL + GSAP SCROLLTRIGGER
    ========================================== */
 
-function initAOS() {
-  if (typeof AOS !== 'undefined') {
-    AOS.init({
-      duration: 800,
-      once: true,
-      offset: 50,
-      easing: 'ease-out-cubic',
-      disableMutationObserver: true
+function initLenis() {
+  if (typeof Lenis === 'undefined') return;
+
+  const lenis = new Lenis({
+    duration: 1.2,
+    easing: (t) => 1 - Math.pow(1 - t, 4), // easeOutExpo approximation
+    smooth: true
+  });
+
+  // Integrar com GSAP ScrollTrigger
+  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+
+    lenis.on('scroll', ScrollTrigger.update);
+
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+
+    gsap.ticker.lagSmoothing(0);
+  } else {
+    // Fallback: requestAnimationFrame loop sem GSAP
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+  }
+
+  // Anchor links: interceptar cliques em links com href="#..."
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', (e) => {
+      const targetId = anchor.getAttribute('href');
+      if (targetId === '#') return;
+
+      const target = document.querySelector(targetId);
+      if (target) {
+        e.preventDefault();
+        lenis.scrollTo(target);
+      }
+    });
+  });
+
+  // Respeitar prefers-reduced-motion
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    lenis.destroy();
+    return;
+  }
+
+  // Expor globalmente para uso externo se necessario
+  window.lenis = lenis;
+}
+
+/* ==========================================
+   SCROLL PROGRESS BAR
+   ========================================== */
+
+function initScrollProgress() {
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.to('.scroll-progress', {
+    scaleX: 1,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: 'body',
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: 0.3
+    }
+  });
+}
+
+/* ==========================================
+   PARALLAX — data-speed
+   ========================================== */
+
+function initParallax() {
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.utils.toArray('[data-speed]').forEach(el => {
+    const speed = parseFloat(el.dataset.speed) || 1;
+    // speed=1 = normal, speed=0.5 = metade da velocidade (fica pra tras)
+    // Calculo: quanto menor o speed, maior o deslocamento Y positivo (fica pra tras)
+    const distance = (1 - speed) * 300;
+
+    gsap.to(el, {
+      y: distance,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: el.closest('section') || el.parentElement,
+        start: 'top top',
+        end: 'bottom top',
+        scrub: true
+      }
+    });
+  });
+
+  // Hero glow — parallax dedicado com deslocamento maior
+  const heroGlow = document.querySelector('.hero-glow');
+  if (heroGlow) {
+    gsap.to(heroGlow, {
+      y: 150,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.hero',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: true
+      }
     });
   }
+}
+
+/* ==========================================
+   HERO ENTRANCE — SPLIT TEXT + STAGGERED REVEAL
+   ========================================== */
+
+function initHeroEntrance() {
+  if (typeof gsap === 'undefined') return;
+
+  const headline = document.querySelector('.hero-headline');
+  if (!headline) return;
+
+  // Split text em words (preserva espacos)
+  splitIntoWords(headline);
+
+  const words = headline.querySelectorAll('.word');
+  const badge = document.querySelector('.hero-badge');
+  const subheadline = document.querySelector('.hero-subheadline');
+  const heroCta = document.querySelector('.hero-cta');
+
+  // Revelar elementos (estavam com visibility: hidden)
+  document.querySelectorAll('[data-hero-animate]').forEach(el => {
+    el.classList.add('is-revealed');
+  });
+
+  // Timeline sequencial
+  const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+
+  // 1. Badge aparece primeiro
+  if (badge) {
+    tl.from(badge, { y: -20, opacity: 0, duration: 0.5 });
+  }
+
+  // 2. Headline words com stagger + rotateX
+  if (words.length) {
+    tl.from(words, {
+      y: 80,
+      opacity: 0,
+      rotateX: -40,
+      duration: 0.9,
+      stagger: 0.06
+    }, badge ? '-=0.1' : 0);
+  }
+
+  // 3. Subheadline aparece apos headline
+  if (subheadline) {
+    tl.from(subheadline, { y: 30, opacity: 0, duration: 0.6 }, '-=0.3');
+  }
+
+  // 4. CTA aparece por ultimo
+  if (heroCta) {
+    tl.from(heroCta, { y: 20, opacity: 0, duration: 0.5 }, '-=0.2');
+  }
+}
+
+function splitIntoWords(element) {
+  const text = element.textContent;
+  element.innerHTML = '';
+
+  text.split(/(\s+)/).forEach(part => {
+    if (/^\s+$/.test(part)) {
+      element.appendChild(document.createTextNode(part));
+    } else if (part) {
+      const span = document.createElement('span');
+      span.className = 'word';
+      span.textContent = part;
+      element.appendChild(span);
+    }
+  });
+}
+
+/* ==========================================
+   CTA VSL — TIMED REVEAL + BOUNCE ENTRANCE
+   ========================================== */
+
+function initVslCta() {
+  if (typeof gsap === 'undefined') return;
+
+  const cta = document.querySelector('.btn--primary[data-vsl-cta]');
+  if (!cta) return;
+
+  // Delay configuravel via atributo (em segundos), default 0
+  const delay = parseFloat(cta.dataset.vslCta) || 0;
+
+  setTimeout(() => {
+    // Tornar visivel antes da animacao GSAP
+    cta.style.visibility = 'visible';
+
+    gsap.from(cta, {
+      scale: 0.8,
+      opacity: 0,
+      duration: 0.6,
+      ease: 'back.out(1.7)',
+      onComplete: () => {
+        // Ativar pulse continuo apos entrada
+        cta.classList.add('is-visible');
+      }
+    });
+  }, delay * 1000);
+}
+
+/* ==========================================
+   MARQUEE — DUPLICACAO INFINITA
+   ========================================== */
+
+function initMarquee() {
+  document.querySelectorAll('.marquee-track').forEach(track => {
+    // Duplicar conteudo para loop infinito seamless
+    const items = track.innerHTML;
+    track.innerHTML = items + items;
+  });
+}
+
+/* ==========================================
+   SCROLL ANIMATIONS (substitui AOS)
+   ========================================== */
+
+function initScrollAnimations() {
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Defaults por tipo de animacao
+  const animations = {
+    'fade-up':    { y: 60, opacity: 0 },
+    'fade-down':  { y: -60, opacity: 0 },
+    'fade-left':  { x: 60, opacity: 0 },
+    'fade-right': { x: -60, opacity: 0 },
+    'fade':       { opacity: 0 },
+    'zoom-in':    { scale: 0.85, opacity: 0 },
+    'zoom-out':   { scale: 1.15, opacity: 0 },
+  };
+
+  gsap.utils.toArray('[data-animate]').forEach(el => {
+    const type = el.dataset.animate || 'fade-up';
+    const from = animations[type] || animations['fade-up'];
+    const delay = parseFloat(el.dataset.animateDelay) || 0;
+    const duration = parseFloat(el.dataset.animateDuration) || 0.8;
+
+    gsap.from(el, {
+      ...from,
+      duration: duration,
+      delay: delay,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 85%',
+        toggleActions: 'play none none none'
+      }
+    });
+  });
 }
 
 /* ==========================================
