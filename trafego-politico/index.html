@@ -20,7 +20,6 @@
 
   <!-- CSS -->
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="cursor.css">
 </head>
 
 <body>
@@ -638,8 +637,6 @@
   <!-- GSAP + ScrollTrigger -->
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js" defer></script>
-  <!-- Custom cursor -->
-  <script src="cursor.js" defer></script>
 
   <script defer>
     document.addEventListener('DOMContentLoaded', function () {
@@ -772,17 +769,17 @@
           .from(title, { y: 20, opacity: 0, duration: 0.4 }, '-=0.2')
           .from(text, { y: 15, opacity: 0, duration: 0.4 }, '-=0.2');
 
-        // Stacking: when NEXT card enters, THIS card shrinks/darkens
+        // Stacking: when NEXT card enters, THIS card shrinks + fades out completely
         if (i < stackedCards.length - 1) {
           var nextCard = stackedCards[i + 1];
           gsap.to(inner, {
-            scale: 1 - 0.04 * (stackedCards.length - 1 - i),
-            opacity: 1 - 0.2 * (stackedCards.length - 1 - i),
-            y: -12 * (stackedCards.length - 1 - i),
+            scale: 0.92,
+            opacity: 0,
+            y: -20,
             scrollTrigger: {
               trigger: nextCard,
               start: 'top bottom',
-              end: 'top 20%',
+              end: 'top 25%',
               scrub: 0.5
             }
           });

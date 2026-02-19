@@ -608,7 +608,7 @@ video {
 }
 
 .stacked-card:last-child {
-  margin-bottom: 0;
+  margin-bottom: 20vh;
 }
 
 .stacked-card__inner {
