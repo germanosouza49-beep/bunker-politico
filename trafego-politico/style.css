@@ -114,24 +114,8 @@ body {
   font-size: var(--fs-body);
   line-height: var(--lh-body);
   color: var(--text-primary);
-  background: linear-gradient(-45deg, #0c0c14, #0e0e1a, #10101f, #0c0c14);
-  background-size: 400% 400%;
-  animation: bgBreath 20s ease infinite;
+  background-color: var(--bg-primary);
   overflow-x: hidden;
-}
-
-@keyframes bgBreath {
-  0% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-
-  100% {
-    background-position: 0% 50%;
-  }
 }
 
 /* Camada 1 — SVG Noise Texture (global) */
@@ -1760,4 +1744,260 @@ video {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* ============================================
+   BACKGROUND NEURAL DATA-DRIVEN
+   ============================================ */
+#bnkr-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: -1;
+  /* Background base */
+  background-color: #0a0a0f;
+}
+
+#bnkr-bg * {
+  pointer-events: none;
+}
+
+.bnkr-z0 {
+  z-index: 0;
+  position: absolute;
+  inset: 0;
+}
+
+.bnkr-z1 {
+  z-index: 1;
+  position: absolute;
+  inset: 0;
+}
+
+.bnkr-z2 {
+  z-index: 2;
+  position: absolute;
+  inset: 0;
+}
+
+.bnkr-z3 {
+  z-index: 3;
+  position: absolute;
+  inset: 0;
+}
+
+.bnkr-z4 {
+  z-index: 4;
+  position: absolute;
+  inset: 0;
+}
+
+#neural-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.bnkr-gradient {
+  background:
+    radial-gradient(ellipse at 15% 50%, rgba(107, 33, 168, 0.2) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 15%, rgba(139, 47, 201, 0.1) 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 100%, rgba(10, 10, 15, 0.95) 0%, transparent 50%);
+}
+
+.bnkr-hex {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 52'%3E%3Cpath d='M30 0 L60 15 L60 37 L30 52 L0 37 L0 15 Z' fill='none' stroke='%239333EA' stroke-width='0.5'/%3E%3C/svg%3E");
+  background-size: 60px 52px;
+  background-repeat: repeat;
+  opacity: 0.025;
+}
+
+.bnkr-scanlines {
+  background: repeating-linear-gradient(0deg, transparent 0-2px, rgba(255, 255, 255, 0.006) 2-4px);
+}
+
+.bnkr-growth {
+  top: auto;
+  bottom: 0;
+  height: 40vh;
+  width: 100vw;
+  opacity: 0.06;
+}
+
+.g-line {
+  fill: none;
+  stroke: url(#growthGrad);
+  stroke-dasharray: 2000;
+  stroke-dashoffset: 2000;
+  animation: drawLine 8s linear infinite;
+}
+
+.l1 {
+  stroke-width: 1.5;
+}
+
+.l2 {
+  stroke-width: 1;
+  opacity: 0.5;
+  animation-delay: 2s;
+}
+
+.l3 {
+  stroke-width: 0.8;
+  opacity: 0.3;
+  animation-delay: 4s;
+}
+
+@keyframes drawLine {
+  0% {
+    stroke-dashoffset: 2000;
+  }
+
+  60% {
+    stroke-dashoffset: 0;
+  }
+
+  100% {
+    stroke-dashoffset: -2000;
+  }
+}
+
+.bnkr-streams .b-stream {
+  position: absolute;
+  writing-mode: vertical-rl;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: rgba(168, 85, 247, 0.1);
+  white-space: nowrap;
+}
+
+@keyframes streamDown {
+  0% {
+    transform: translateY(-100vh);
+  }
+
+  100% {
+    transform: translateY(100vh);
+  }
+}
+
+/* Camada 7: Métricas */
+.m-card {
+  position: absolute;
+  border: 1px solid rgba(139, 47, 201, 0.1);
+  background: rgba(139, 47, 201, 0.03);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  padding: 12px 16px;
+  border-radius: 6px;
+  animation: floatCard 8s ease-in-out infinite alternate;
+}
+
+.m-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: rgba(168, 85, 247, 0.25);
+  margin-bottom: 2px;
+}
+
+.m-val {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  color: rgba(168, 85, 247, 0.15);
+  margin-bottom: 6px;
+  line-height: 1;
+}
+
+.m-bar-track {
+  width: 100px;
+  height: 2px;
+  background: rgba(139, 47, 201, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.m-bar-fill {
+  height: 100%;
+  background: #9333EA;
+  width: 30%;
+  animation: barPulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes floatCard {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  100% {
+    transform: translateY(-15px) rotate(0.5deg);
+  }
+}
+
+@keyframes barPulse {
+  0% {
+    width: 30%;
+  }
+
+  100% {
+    width: 85%;
+  }
+}
+
+/* Camada 8: Pulsos de Voto */
+.pulse {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(168, 85, 247, 0.3);
+  transform: translate(-50%, -50%);
+}
+
+.pulse::before,
+.pulse::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(168, 85, 247, 0.4);
+  border-radius: 50%;
+  animation: radarPulse 3s ease-out infinite;
+}
+
+.pulse::after {
+  animation-delay: 1.5s;
+}
+
+@keyframes radarPulse {
+  0% {
+    width: 8px;
+    height: 8px;
+    opacity: 1;
+  }
+
+  100% {
+    width: 80px;
+    height: 80px;
+    opacity: 0;
+  }
+}
+
+/* Camada 9: Glow Mouse */
+#bnkr-mouse-glow {
+  width: 450px;
+  height: 450px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(139, 47, 201, 0.07) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  transition: top 0.3s ease-out, left 0.3s ease-out;
+  top: -1000px;
+  left: -1000px;
 }
