@@ -1745,6 +1745,15 @@ video {
   background-color: #0a0a0f;
 }
 
+#bnkr-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: rgba(10, 10, 15, 0.75);
+  z-index: 5;
+  pointer-events: none;
+}
+
 #bnkr-bg * {
   pointer-events: none;
 }
