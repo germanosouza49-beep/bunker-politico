@@ -273,7 +273,7 @@
   <section class="section section--alt" id="como-funciona">
     <div class="container">
 
-      <div class="section__header section__header--center" data-aos="fade-up">
+      <div class="section__header section__header--center">
         <h2 class="section__title">
           Do primeiro contato à <em>campanha rodando</em>
         </h2>
@@ -282,9 +282,9 @@
       <div class="timeline">
 
         <!-- Step 1 -->
-        <div class="timeline-step" data-aos="fade-up">
+        <div class="timeline-step">
           <div class="timeline-step__circle">
-            <span class="timeline-step__number">01</span>
+            <span class="timeline-step__number" data-value="1">01</span>
           </div>
           <div class="timeline-step__line"></div>
           <div class="timeline-step__content">
@@ -295,9 +295,9 @@
         </div>
 
         <!-- Step 2 -->
-        <div class="timeline-step" data-aos="fade-up" data-aos-delay="150">
+        <div class="timeline-step">
           <div class="timeline-step__circle">
-            <span class="timeline-step__number">02</span>
+            <span class="timeline-step__number" data-value="2">02</span>
           </div>
           <div class="timeline-step__line"></div>
           <div class="timeline-step__content">
@@ -308,9 +308,9 @@
         </div>
 
         <!-- Step 3 -->
-        <div class="timeline-step" data-aos="fade-up" data-aos-delay="300">
+        <div class="timeline-step">
           <div class="timeline-step__circle">
-            <span class="timeline-step__number">03</span>
+            <span class="timeline-step__number" data-value="3">03</span>
           </div>
           <div class="timeline-step__line"></div>
           <div class="timeline-step__content">
@@ -770,6 +770,46 @@
           });
         });
       }
+
+      /* === TIMELINE — LINE DRAWING + STEP REVEALS === */
+      gsap.utils.toArray('.timeline-step__line').forEach(function(line) {
+        gsap.fromTo(line,
+          { scaleY: 0 },
+          { scaleY: 1, ease: 'none',
+            scrollTrigger: {
+              trigger: '.timeline',
+              start: 'top 60%',
+              end: 'bottom 60%',
+              scrub: 0.5
+            }
+          }
+        );
+      });
+
+      // Timeline section title entrance
+      gsap.from('#como-funciona .section__header', {
+        y: 40, opacity: 0, duration: 0.8,
+        scrollTrigger: { trigger: '#como-funciona', start: 'top 75%' }
+      });
+
+      // Steps appear as the line reaches them
+      gsap.utils.toArray('.timeline-step').forEach(function(step) {
+        gsap.from(step, {
+          x: -30, opacity: 0, duration: 0.7,
+          scrollTrigger: { trigger: step, start: 'top 75%' }
+        });
+      });
+
+      /* === TIMELINE — STEP NUMBER COUNTER === */
+      gsap.utils.toArray('.timeline-step__number').forEach(function(el) {
+        var target = parseInt(el.dataset.value);
+        var obj = { val: 0 };
+        gsap.to(obj, {
+          val: target, duration: 0.8, ease: 'power2.out',
+          scrollTrigger: { trigger: el, start: 'top 80%' },
+          onUpdate: function() { el.textContent = String(Math.round(obj.val)).padStart(2, '0'); }
+        });
+      });
 
       /* === PROBLEM CARDS — 3D TILT ON HOVER === */
       if (!window.matchMedia('(hover: none)').matches) {

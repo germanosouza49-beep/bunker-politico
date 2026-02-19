@@ -768,6 +768,7 @@ video {
   border-radius: 3px;
   align-self: stretch;
   min-height: 100%;
+  transform-origin: top;
 }
 
 .timeline-step:last-child .timeline-step__line {
