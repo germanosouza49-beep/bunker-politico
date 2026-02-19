@@ -13,7 +13,6 @@
   pointer-events: none;
   z-index: 9999;
   opacity: 0;
-  transition: opacity 0.3s;
 }
 
 .cursor-ring {
@@ -27,13 +26,6 @@
   pointer-events: none;
   z-index: 9998;
   opacity: 0;
-  transition: opacity 0.3s;
-}
-
-/* Cursor visible after first mouse move */
-.cursor-active .cursor-dot,
-.cursor-active .cursor-ring {
-  opacity: 1;
 }
 
 /* Hide native cursor when custom cursor is active */
