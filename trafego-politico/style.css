@@ -4,6 +4,13 @@
    Fonts: Clash Display + General Sans
    ============================================ */
 
+/* --- @property (rotating border) --- */
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
 /* --- Reset & Base --- */
 *,
 *::before,
@@ -837,14 +844,33 @@ video {
   border-color: rgba(255, 255, 255, 0.1);
 }
 
+.pricing-grid {
+  perspective: 1000px;
+}
+
 .pricing-card--featured {
+  position: relative;
+  z-index: 1;
   background: linear-gradient(135deg, rgba(123, 47, 242, 0.1) 0%, var(--bg-card) 100%);
   border-color: rgba(123, 47, 242, 0.3);
   transform: scale(1.03);
 }
 
+.pricing-card--featured::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: calc(var(--radius-lg) + 1px);
+  background: conic-gradient(from var(--angle, 0deg), transparent 40%, var(--accent) 50%, transparent 60%);
+  z-index: -1;
+  animation: rotateBorder 4s linear infinite;
+}
+
+@keyframes rotateBorder {
+  to { --angle: 360deg; }
+}
+
 .pricing-card--featured:hover {
-  transform: scale(1.03) translateY(-6px);
   box-shadow: 0 12px 40px rgba(123, 47, 242, 0.2);
   border-color: rgba(123, 47, 242, 0.5);
 }
@@ -1042,6 +1068,41 @@ video {
   color: var(--danger);
 }
 
+/* Prep bars */
+.prep-bar {
+  margin-top: 1.5rem;
+}
+
+.prep-bar__label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.prep-bar__track {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.prep-bar__fill {
+  height: 100%;
+  width: 0;
+  border-radius: 3px;
+  transition: width 1.2s ease;
+}
+
+.compare-col--positive .prep-bar__fill {
+  background: #4ade80;
+}
+
+.compare-col--negative .prep-bar__fill {
+  background: var(--danger);
+}
+
 /* ============================================
    SECAO 8: FAQ
    Arquetipo: Reveal on Demand
@@ -1055,6 +1116,14 @@ video {
 
 .faq-item {
   border-bottom: 1px solid var(--border);
+  border-left: 3px solid transparent;
+  transition: border-color 0.3s, padding-left 0.3s, background 0.3s;
+}
+
+.faq-item--active {
+  border-left-color: var(--accent);
+  padding-left: calc(0.75rem + 3px);
+  background: rgba(123, 47, 242, 0.04);
 }
 
 .faq-item:first-child {
@@ -1100,22 +1169,10 @@ video {
   user-select: none;
 }
 
-.faq-item--active .faq-item__toggle {
-  transform: rotate(45deg);
-}
-
 .faq-item__answer {
-  max-height: 0;
+  height: 0;
   overflow: hidden;
   opacity: 0;
-  transition:
-    max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-    opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.faq-item--active .faq-item__answer {
-  max-height: 300px;
-  opacity: 1;
 }
 
 .faq-item__answer-inner {
@@ -1134,6 +1191,19 @@ video {
 .section--cta {
   position: relative;
   overflow: hidden;
+  background: linear-gradient(-45deg, #0c0c14, #12121e, #14102a, #0c0c14);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.section--cta .btn--primary {
+  animation: ctaPulse 2.5s ease-in-out infinite;
 }
 
 .section--cta::before {
@@ -1423,6 +1493,23 @@ video {
   .faq-item__answer-inner {
     padding-inline: 0;
   }
+}
+
+/* ============================================
+   SCROLL HIGHLIGHT MARKS
+   ============================================ */
+
+.scroll-highlight {
+  background: linear-gradient(120deg, rgba(123, 47, 242, 0.25) 0%, rgba(123, 47, 242, 0.25) 100%);
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  background-position: 0 0;
+  transition: background-size 0.6s ease;
+  color: inherit;
+}
+
+.scroll-highlight.is-visible {
+  background-size: 100% 100%;
 }
 
 /* ============================================
