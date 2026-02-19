@@ -202,8 +202,8 @@
   <section class="section" id="entregamos">
     <div class="container">
 
-      <div class="section__header section__header--center" data-aos="fade-up">
-        <h2 class="section__title">
+      <div class="section__header section__header--center">
+        <h2 class="section__title" id="bento-title">
           Tráfego pago + consultoria estratégica para sua <em>campanha</em>
         </h2>
       </div>
@@ -211,7 +211,7 @@
       <div class="bento-grid">
 
         <!-- Card 1 (Main) -->
-        <div class="bento-card bento-card--main" data-aos="fade-up">
+        <div class="bento-card bento-card--main">
           <span class="bento-card__number">01</span>
           <svg class="bento-card__icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
             stroke-width="1.8" stroke="currentColor">
@@ -224,7 +224,7 @@
         </div>
 
         <!-- Card 2 -->
-        <div class="bento-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="bento-card">
           <span class="bento-card__number">02</span>
           <svg class="bento-card__icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
             stroke-width="1.8" stroke="currentColor">
@@ -237,7 +237,7 @@
         </div>
 
         <!-- Card 3 -->
-        <div class="bento-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="bento-card">
           <span class="bento-card__number">03</span>
           <svg class="bento-card__icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
             stroke-width="1.8" stroke="currentColor">
@@ -250,7 +250,7 @@
         </div>
 
         <!-- Card 4 (Wide) -->
-        <div class="bento-card bento-card--wide" data-aos="fade-up" data-aos-delay="300">
+        <div class="bento-card bento-card--wide">
           <span class="bento-card__number">04</span>
           <svg class="bento-card__icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
             stroke-width="1.8" stroke="currentColor">
@@ -695,6 +695,20 @@
         });
       });
 
+      /* === PROBLEM SECTION — SUBTLE BG SHIFT === */
+      var problemSection = document.querySelector('.section--problem');
+      if (problemSection) {
+        gsap.to(problemSection, {
+          backgroundColor: '#0e0e1a',
+          scrollTrigger: {
+            trigger: problemSection,
+            start: 'top center',
+            end: 'bottom center',
+            scrub: true
+          }
+        });
+      }
+
       /* === PROBLEM CARDS — STAGGER VERTICAL === */
       var problemCards = gsap.utils.toArray('.problem-card');
       if (problemCards.length) {
@@ -728,6 +742,24 @@
             toggleActions: 'play none none none'
           }
         });
+      }
+
+      /* === BENTO BOX — SEQUENCED TIMELINE === */
+      var bentoSection = document.getElementById('entregamos');
+      if (bentoSection) {
+        var bentoTitle = bentoSection.querySelector('.section__title');
+        var bentoMain = bentoSection.querySelector('.bento-card--main');
+        var bentoSmall = gsap.utils.toArray(bentoSection.querySelectorAll('.bento-card:not(.bento-card--main):not(.bento-card--wide)'));
+        var bentoWide = bentoSection.querySelector('.bento-card--wide');
+
+        var bentoTl = gsap.timeline({
+          scrollTrigger: { trigger: bentoSection, start: 'top 70%', toggleActions: 'play none none none' }
+        });
+
+        if (bentoTitle) bentoTl.from(bentoTitle, { y: 40, opacity: 0, duration: 0.6 });
+        if (bentoMain) bentoTl.from(bentoMain, { y: 60, opacity: 0, duration: 0.8, ease: 'power3.out' }, '-=0.2');
+        if (bentoSmall.length) bentoTl.from(bentoSmall, { y: 40, opacity: 0, duration: 0.6, stagger: 0.12 }, '-=0.4');
+        if (bentoWide) bentoTl.from(bentoWide, { y: 40, opacity: 0, duration: 0.6 }, '-=0.2');
       }
 
       /* === PROBLEM CARDS — 3D TILT ON HOVER === */
